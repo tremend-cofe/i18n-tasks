@@ -165,14 +165,16 @@ module I18n::Tasks::Data::Tree
       label = if key.nil?
                 Rainbow('∅').faint
               else
-                [Rainbow(key).color(1 + level % 15),
-                 (": #{format_value_for_inspect(value)}" if leaf?),
-                 (" #{data}" if data?)].compact.join
+                [key,
+                 ": ",
+                 (value if leaf?),
+                 ("#{data}" if data?)].compact.join
               end
       ['  ' * level, label, ("\n" + children.map { |c| c.inspect(level + 1) }.join("\n") if children?)].compact.join
     end
 
     def format_value_for_inspect(value)
+      return value
       if value.is_a?(Symbol)
         "#{Rainbow('⮕ ').bright.yellow}#{Rainbow(value).yellow}"
       else

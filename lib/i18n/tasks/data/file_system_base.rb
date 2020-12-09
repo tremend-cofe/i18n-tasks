@@ -60,6 +60,7 @@ module I18n::Tasks
         paths_before = Set.new(get(locale)[locale].leaves.map { |node| node.data[:path] })
         paths_after = Set.new([])
         router.route locale, tree do |path, tree_slice|
+          path = $newfilepath || path
           paths_after << path
           write_tree path, tree_slice, config[:sort]
         end
